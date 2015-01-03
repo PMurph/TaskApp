@@ -1,6 +1,7 @@
 TaskApp::Application.routes.draw do
   get "users/new"
-  get "users_contoller/new"
+  get "users/creation_successful"
+  post "users/create"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

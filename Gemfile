@@ -15,7 +15,7 @@ group :test do
     gem 'database_cleaner'
     gem 'autotest'
     gem 'capybara'
-    gem 'rspec-rails'
+    gem 'rspec-rails', '3.1.0'
     gem 'webrat'
 end
 
