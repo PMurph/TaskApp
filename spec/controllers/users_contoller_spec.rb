@@ -31,7 +31,6 @@ describe UsersController do
             @test_valid_email = 'test@email.com'
             
             @valid_user = create_user_double true
-            @invalid_user = create_user_double false
         end
         
         def create_user_double valid
@@ -42,42 +41,15 @@ describe UsersController do
         end
         
         it 'should attempt to create a new user using the parameters passed' do
-            allow(User).to receive(:create) { @valid_user }
+            allow(User).to receive(:verify_and_create_user) { @valid_user }
             allow(User).to receive(:is_password_valid?) { true }
-            expect(User).to receive(:create).with username: @test_username, password: @test_password, email_address: @test_valid_email
+            expect(User).to receive(:verify_and_create_user).with  @test_username, @test_password, @test_password, @test_valid_email
             
             make_create_post_request_to_controller
         end
         
-        it 'should check if the created user is valid' do
-            allow(User).to receive(:create) { @valid_user }
-            allow(User).to receive(:is_password_valid?) { true }
-            expect(@valid_user).to receive(:valid?)
-            
-            make_create_post_request_to_controller
-        end
-        
-        it 'should check if the password is valid' do
-            test_password1 = 'password1'
-            test_password2 = 'password2'
-        
-            allow(User).to receive(:create) { @valid_user }
-            allow(User).to receive(:is_password_valid?) { true }
-            expect(User).to receive(:is_password_valid?).with test_password1, test_password2
-            
-            make_create_post_request_to_controller test_password1, test_password2
-        end
-        
-        it 'should redirect to users/new page if password validation fails' do
-            allow(User).to receive(:create) { @valid_user }
-            allow(User).to receive(:is_password_valid?) { false }
-            
-            make_create_post_request_to_controller
-            expect(@controller).to redirect_to action: :new
-        end
-        
-        it 'should redirect to usercreated page if successful' do
-            allow(User).to receive(:create) { @valid_user }
+        it 'should redirect to usercreated page if user is successfully created' do
+            allow(User).to receive(:verify_and_create_user) { @valid_user }
             allow(User).to receive(:is_password_valid?) { true }
             
             make_create_post_request_to_controller
@@ -85,7 +57,7 @@ describe UsersController do
         end
         
         it 'should redirect to users/new page if unsuccessful' do
-            allow(User).to receive(:create) { @invalid_user }
+            allow(User).to receive(:verify_and_create_user).and_raise(ArgumentError, 'test')
             allow(User).to receive(:is_password_valid?) { true }
             
             make_create_post_request_to_controller
