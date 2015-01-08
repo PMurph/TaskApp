@@ -3,7 +3,8 @@ require 'rails_helper'
 
 describe User do
     it 'should respond to verify_password?' do
-        expect(User).to respond_to(:is_password_valid?)
+        expect(User).to respond_to :is_password_valid?
+        expect(User).to respond_to :verify_and_create_user
     end
     
     describe 'creating users' do
@@ -71,6 +72,26 @@ describe User do
         
         it 'should return false if password and retyped password are not equal' do
             expect(User.is_password_valid? 'Th15 P@ssword', 'Th@t Pa55word').to be_falsy
+        end
+    end
+    
+    describe '#verify_and_create_user' do
+        before(:each) do
+            @username = 'test_user'
+            @password = 'password123'
+            @email_address = 'fake@fakemail.com'
+        end
+    
+        it 'should return a valid user when valid parameters are passed' do
+            user = User.verify_and_create_user @username, @password, @password, @email_address
+            
+            expect(user.valid?).to be_truthy
+        end
+        
+        it 'should raise an Error if invalid parameters are passed' do
+            expect{ User.verify_and_create_user @username, @password, 'other', @email_address }.to raise_error(ArgumentError)
+            
+            expect{ User.verify_and_create_user @username, @password, @password, 'bad email' }.to raise_error(ArgumentError)
         end
     end
 end

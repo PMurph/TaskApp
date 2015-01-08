@@ -11,4 +11,13 @@ class User < ActiveRecord::Base
     def self.is_password_valid? password, retyped_password
         password == retyped_password
     end
+    
+    def self.verify_and_create_user username, password, retyped_password, email_address
+        raise(ArgumentError, "Passwords #{password} and #{retyped_password} do not match") if !User.is_password_valid? password, retyped_password
+        
+        user = User.create username: username, password: password, email_address: email_address
+        raise(ArgumentError, "Invalid username(#{username}) or email address(#{email_address})") if !user.valid?
+        
+        user
+    end
 end
