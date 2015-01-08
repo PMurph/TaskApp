@@ -5,6 +5,7 @@ gem 'rails', '4.0.0' # Bundle edge Rails instead: gem 'rails', github: 'rails/ra
 gem 'jquery-rails' # Use jquery as the JavaScript library
 gem 'sqlite3'
 gem 'turbolinks' # Needed for AWS beanstalk
+gem 'execjs'
 
 group :development, :test do
     gem 'debugger'
