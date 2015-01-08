@@ -10,6 +10,30 @@ describe UsersController do
         expect(@controller).to respond_to :create
     end
 
+    it 'should respond to the show method call' do
+        expect(@controller).to respond_to :show
+    end
+    
+    it 'should respond to the edit method call' do
+        expect(@controller).to respond_to :edit
+    end
+    
+    it 'should respond to the update method call' do
+        expect(@controller).to respond_to :update
+    end
+    
+    it 'should respond to the delete method call' do
+        expect(@controller).to respond_to :destroy
+    end
+    
+    it 'should respond to the login method call' do
+        expect(@controller).to respond_to :login
+    end
+    
+    it 'should respond to the logout method call' do
+        expect(@controller).to respond_to :logout
+    end
+    
     describe '#new' do
         before(:each) do
             get :new

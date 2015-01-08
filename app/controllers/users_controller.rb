@@ -16,4 +16,21 @@ class UsersController < ApplicationController
     def creation_successful
     end
     
+    def show
+    end
+    
+    def edit
+    end
+    
+    def update
+    end
+    
+    def destroy
+    end
+    
+    def login
+    end
+    
+    def logout
+    end
 end
