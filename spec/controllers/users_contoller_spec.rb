@@ -110,4 +110,6 @@ describe UsersController do
             expect(response).to render_template :login
         end
     end
+    
+    
 end
