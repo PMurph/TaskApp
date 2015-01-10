@@ -31,6 +31,9 @@ class UsersController < ApplicationController
     def login
     end
     
+    def verify_login
+    end
+    
     def logout
     end
 end

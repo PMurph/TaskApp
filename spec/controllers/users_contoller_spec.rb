@@ -30,6 +30,10 @@ describe UsersController do
         expect(@controller).to respond_to :login
     end
     
+    it 'should respond to the verify_login method call' do
+        expect(@controller).to respond_to :verify_login
+    end
+    
     it 'should respond to the logout method call' do
         expect(@controller).to respond_to :logout
     end
@@ -90,6 +94,20 @@ describe UsersController do
         
         def make_create_post_request_to_controller test_password=@test_password, test_retyped_password=@test_password
             post :create, username: @test_username, password: test_password, retyped_password: test_retyped_password, email_address: @test_valid_email
+        end
+    end
+    
+    describe '#login' do
+        before(:each) do
+            get :login
+        end
+        
+        it 'should respond with success' do
+            expect(response).to be_success
+        end
+        
+        it 'should render the login template' do
+            expect(response).to render_template :login
         end
     end
 end

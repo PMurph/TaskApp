@@ -2,9 +2,16 @@ require 'spec_helper'
 require 'rails_helper'
 
 describe User do
-    it 'should respond to verify_password?' do
+    it 'should respond to the is_password_valid? method call' do
         expect(User).to respond_to :is_password_valid?
+    end
+    
+    it 'should respond to the verify_and_create_user method call' do
         expect(User).to respond_to :verify_and_create_user
+    end
+    
+    it 'should respond to the is_verified? method call' do
+        expect(User.new).to respond_to :verified?
     end
     
     describe 'creating users' do
@@ -93,5 +100,11 @@ describe User do
             
             expect{ User.verify_and_create_user @username, @password, @password, 'bad email' }.to raise_error(ArgumentError)
         end
+    end
+    
+    describe '#verified?' do
+        it 'should return true if user has been verified'
+        
+        it 'should return false if user has not been verified'
     end
 end
