@@ -1,12 +1,12 @@
 <h1>Create New User</h1>
-<form id="user_creation_form" action="create" method="POST">
-    <label>Username</label>
-    <input id="username" type="text" name="username"/>
-    <label>Password</label>
-    <input id="password" type="password" name="password"/>
-    <label>Retype Password</label>
-    <input id="retyped_password" type="password" name="retyped_password"/>
-    <label>Email Address</label>
-    <input id="email_address" type="text" name="email_address"/>
-    <input id="create_user" type="submit"/>
-</form>
+<%= form_tag({controller: "users", action: "create"}, method: "post", id: "user_creation_form") do %>
+    <%= label_tag :username, "Username" %>
+    <%= text_field_tag :username %>
+    <%= label_tag :password, "Password" %>
+    <%= password_field_tag :password %>
+    <%= label_tag :retyped_password, "Retype Password" %>
+    <%= password_field_tag :retyped_password %>
+    <%= label_tag :email_address, "Email Address" %>
+    <%= text_field_tag :email_address %>
+    <%= submit_tag "Create User", id: "create_user" %>
+<% end %>

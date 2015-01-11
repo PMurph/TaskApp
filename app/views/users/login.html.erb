@@ -1,8 +1,8 @@
 <h1>Login</h1>
-<form id="user_login_form">
-    <label>Username</label>
-    <input id="username" type="text" name="username"/>
-    <label>Password</label>
-    <input id="password" type="password" name="password"/>
-    <input id="login" type="submit"/>
-</form>
+<%= form_tag({controller: "users", action: "login"}, method: "post", id: "user_login_form") do %>
+    <%= label_tag :username, "Username" %>
+    <%= text_field_tag :username %>
+    <%= label_tag :password, "Password" %>
+    <%= password_field_tag :password %>
+    <%= submit_tag "Login", id: "login" %>
+<% end %>
