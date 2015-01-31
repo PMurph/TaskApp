@@ -32,9 +32,21 @@ class UsersController < ApplicationController
     end
     
     def verify_login
+        # This is very insecure, and will change later
+        username = params[:username]
+        password = params[:password]
+        if User.can_login? username, password
+            set_user_session username, password
+        end
         redirect_to action: :login
+    end
+    
+    def set_user_session username, password
+        session[:user] = {username: username, password: password}
     end
     
     def logout
     end
+    
+    private :set_user_session
 end

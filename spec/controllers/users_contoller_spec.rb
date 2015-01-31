@@ -112,15 +112,39 @@ describe UsersController do
     end
     
     describe '#verify_login' do
-        it 'should redirect to the login page if user is invalid' do
-            allow(User).to receive(:can_login?) { false }
+        describe 'invalid users information' do
+            before(:each) do
+                allow(User).to receive(:can_login?) { false }
             post :verify_login, username: "invalid", password: "invalid"
-        
-            expect(@controller).to redirect_to action: :login
+            end
+            
+            it 'should redirect to the login page if user is invalid' do
+                expect(@controller).to redirect_to action: :login
+            end
+            
+            it 'should not assign anything to the :user session variable is invalid user information is passed' do
+                expect(session[:user]).to be_falsy
+            end
         end
         
-        it 'should set the "username" session variable if valid user'
+        describe 'valid user information' do
+            before(:each) do
+                @username = "valid"
+                allow(User).to receive(:can_login?) { true }
+                post :verify_login, username: @username, password: "valid"
+            end
+            
+            it 'should set the :user session variable if valid user' do
+                expect(session[:user]).to be_truthy
+            end
         
-        it 'should set the "password" session variable if valid user'
+            it 'should set the "user" session variable should have a :username key and the username stored with it' do
+                expect(session[:user][:username]).to eq(@username)
+            end
+        
+            it 'should set the "user" session variable should have a :password key' do
+                expect(session[:user][:password]).to be_truthy
+            end
+        end
     end
 end
