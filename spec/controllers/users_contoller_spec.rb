@@ -111,5 +111,16 @@ describe UsersController do
         end
     end
     
-    
+    describe '#verify_login' do
+        it 'should redirect to the login page if user is invalid' do
+            allow(User).to receive(:can_login?) { false }
+            post :verify_login, username: "invalid", password: "invalid"
+        
+            expect(@controller).to redirect_to action: :login
+        end
+        
+        it 'should set the "username" session variable if valid user'
+        
+        it 'should set the "password" session variable if valid user'
+    end
 end

@@ -20,4 +20,9 @@ class User < ActiveRecord::Base
         
         user
     end
+    
+    def self.can_login? username, password
+        user = User.find_by username: username, password: password
+        return user != nil && user.email_verified
+    end
 end

@@ -32,6 +32,7 @@ class UsersController < ApplicationController
     end
     
     def verify_login
+        redirect_to action: :login
     end
     
     def logout

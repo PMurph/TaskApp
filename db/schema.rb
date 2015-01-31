@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20150108131827) do
     t.string   "email_address"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "verified",      default: false
+    t.boolean  "email_verified", default: false
   end
 
 end
