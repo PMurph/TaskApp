@@ -37,15 +37,19 @@ class UsersController < ApplicationController
         password = params[:password]
         if User.can_login? username, password
             set_user_session username, password
+            redirect_to :root
+        else
+            redirect_to action: :login
         end
-        redirect_to action: :login
     end
     
     def set_user_session username, password
-        session[:user] = {username: username, password: password}
+        session[:user] = {username: username, auth: password}
     end
     
     def logout
+        session[:user] = nil
+        redirect_to :root
     end
     
     private :set_user_session

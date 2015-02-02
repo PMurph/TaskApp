@@ -115,7 +115,7 @@ describe UsersController do
         describe 'invalid users information' do
             before(:each) do
                 allow(User).to receive(:can_login?) { false }
-            post :verify_login, username: "invalid", password: "invalid"
+                post :verify_login, username: "invalid", password: "invalid"
             end
             
             it 'should redirect to the login page if user is invalid' do
@@ -134,17 +134,37 @@ describe UsersController do
                 post :verify_login, username: @username, password: "valid"
             end
             
+            it 'should redirect to the root of the app if user is valid' do
+                expect(controller).to redirect_to :root
+            end
+            
             it 'should set the :user session variable if valid user' do
                 expect(session[:user]).to be_truthy
             end
         
-            it 'should set the "user" session variable should have a :username key and the username stored with it' do
+            it 'should set the :user session variable should have a :username key and the username stored with it' do
                 expect(session[:user][:username]).to eq(@username)
             end
         
-            it 'should set the "user" session variable should have a :password key' do
-                expect(session[:user][:password]).to be_truthy
+            it 'should set the :user session variable should have a :auth key' do
+                expect(session[:user][:auth]).to be_truthy
             end
+        end
+    end
+    
+    describe '#logout' do
+        before(:each) do
+            session[:user] = {username: "test", auth: "test"}
+        
+            post :logout
+        end
+        
+        it 'should clear the :user session variable on successful logout' do
+            expect(session[:user]).to be_falsy
+        end
+        
+        it 'should redirect to root of the app' do
+            expect(@controller).to redirect_to :root
         end
     end
 end
